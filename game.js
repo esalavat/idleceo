@@ -14,19 +14,26 @@
     }
 
     function ProgressBar(el) {
-        this.progress = new Observable(el.dataset["progress"]);
+        let val = parseInt(el.dataset["progress"]);
+        console.log(val);
+        this.progress = new Observable(val);
         this.progress.subscribe(((val) => {
             el.dataset["progress"] = val;
         }));
         this.el = el;
-        this.updateUi;
+        this.updateUi();
     }
     ProgressBar.prototype.update = function(progress) {
         this.progress.update(progress);
         this.updateUi();
     }
     ProgressBar.prototype.updateUi = function() {
-        this.el.getElementsByTagName('div')[0].style.width = this.progress.val + "%";
+        let max = parseInt(this.el.dataset["max"]);
+        let percent = this.progress.val / max * 100;
+        let bar = this.el.getElementsByTagName('div')[0];
+
+        bar.style.width = percent + "%";
+        this.el.getElementsByTagName('span')[0].innerHTML = this.progress.val + " / " + max + " (" + percent.toFixed(2) + "%)";
     }
 
     let progressBars = {};
@@ -52,7 +59,8 @@
         game.counter = new Observable(0);
         game.counter.subscribe((val) => {
             document.getElementById("counter").innerHTML = game.counter.val;
-            updateProgressBar("current-task-progress", val);
+            updateProgressBar("task-1-progress", val);
+            updateProgressBar("task-2-progress", val);
         });
 
         game.bindComponents();
