@@ -15,12 +15,13 @@
 
     function ProgressBar(el) {
         let val = parseInt(el.dataset["progress"]);
-        console.log(val);
         this.progress = new Observable(val);
         this.progress.subscribe(((val) => {
             el.dataset["progress"] = val;
         }));
         this.el = el;
+        el.appendChild(document.createElement("div"));
+        el.appendChild(document.createElement("span"));
         this.updateUi();
     }
     ProgressBar.prototype.update = function(progress) {
