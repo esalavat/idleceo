@@ -6,13 +6,43 @@
     </head>
     <body>
         <div id="game" class="main-content">
-            <div class="sprint">
-                <h2 class="section-heading">Sprint</h2>
-                <div class="progress-bar" id="task-1-progress" data-progress="0" data-max="100"></div>
-                <div class="progress-bar" id="task-2-progress" data-progress="0" data-max="300"></div>
+            <div class="section">
+                <h1>Company Summary</h1>
+                <div class="stat-group">
+                    <div>
+                        Money: $<span id="counter">0</span>
+                    </div>
+                    <div>
+                        Product: <span id="product">0</span>
+                    </div>
+                    <div>
+                        Reputation: <span id="reputation">0</span>
+                    </div>
+                </div>
             </div>
-            <span id="counter"></span>
+            <div class="section">
+                <h1>Sprint</h2>
+                <div class="progress-bar" id="task-1-progress" data-progress="0" data-max="20"></div>
+            </div>
+            <div class="section">
+                <h1>Team</h1>
+                <div class="stat-group">
+                    <div>
+                        Code/sec: <span id="code-per-sec">1</span>
+                    </div>
+                </div>
+                <div class="code"></div>
+                <div id="employees">
+                    <h2>Title(Quantity): Lines of Code Per second</h2>
+                    <ul>
+                        <li data-code="1" data-quantity="1" data-name="CEO"></li>
+                    </ul>
+                </div>
+            </div>
         </div>
+        <script src="./Components/Observable.js"></script>
+        <script src="./Components/ProgressBar.js"></script>
+        <script src="./Components/Task.js"></script>
         <script src="game.js"></script>
     </body>
 </html>
