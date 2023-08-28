@@ -1,10 +1,13 @@
 # idleceo
-Html and javascript idle clicker style game.
+Idle clicker game developed in React.
 
 ## Development Setup
 
-Nothing, just edit files.
+npm install
+npm start
 
-## Run
+That will set up webpack in watch mode for hot reloading and a development server on port 3000.
 
-Just open index.html
+## Prod build
+
+npm run build
