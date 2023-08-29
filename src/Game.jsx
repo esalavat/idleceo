@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import {useInterval} from "./hooks/useInterval.jsx";
 
 import CompanySummary from "./components/CompanySummary.jsx";
 import Sprint from "./components/Sprint/Sprint.jsx";
@@ -27,6 +28,13 @@ const Game = () => {
             section: "Backlog",
             progress: 0,
             points: 20
+        },
+        {
+            id: 3,
+            name: "Task 3",
+            section: "Backlog",
+            progress: 0,
+            points: 25
         }
     ]);
 
@@ -38,7 +46,7 @@ const Game = () => {
 
     const codePerSec = employees.map((employee) => employee.code*employee.quantity).reduce((a, b) => a+b);
 
-    const doTic = () => {
+    function doTic() {
         let toAdd = codePerSec;
 
         setTasks((prev) => {
@@ -56,9 +64,7 @@ const Game = () => {
         });
     }
 
-    useEffect(() => {
-        setInterval(doTic, 1000);
-    },[]);
+    useInterval(doTic, 1000);
 
     const addEmployee = (name) => {
         setEmployees((prev) => 
@@ -86,13 +92,11 @@ const Game = () => {
             case "Active":
                 if(isTaskComplete(curTask)) {
                     newSec = "Complete";
+                    completeTask(curTask);
                 } else {
                     newSec = "Backlog";
                 }
                 break;
-            case "Complete":
-                completeTask(curTask);
-                return;
         }
 
         console.log("Moving task " + id + " from " + curSec + " to " + newSec);
@@ -114,7 +118,6 @@ const Game = () => {
 
     function completeTask(task) {
         updateSprint(task.points);
-        removeTask(task);
     }
 
     function updateSprint(points) {
