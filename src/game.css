@@ -96,3 +96,12 @@ img {
 #employees li {
     margin-bottom: .75em; 
 }
+
+.btn {
+    border-radius: .5em;
+    border: none;
+    background-color: #5555FF;
+    color: #FFFFFF;
+    height: 2em;
+    width: 2em;
+}

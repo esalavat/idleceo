@@ -1,10 +1,11 @@
 import React from "react";
+import Tasks from "./Tasks.jsx";
 
-const Sprint = () => {
+const Sprint = ({tasks}) => {
     return (
         <div className="section">
             <h1>Sprint</h1>
-            <div className="progress-bar" id="task-1-progress" data-progress="0" data-max="20"></div>
+            <Tasks tasks={tasks} />
         </div>
     );
 };
