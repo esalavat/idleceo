@@ -53,6 +53,9 @@ img {
     z-index: 10;
     color: white;
 }
+.progress-bar > div.complete {
+    background-color: #44EE44;
+}
 
 .code {
     background-color: black;
@@ -85,7 +88,7 @@ img {
     display: flex;
     margin-bottom: .75em;
 }
-.stat-group > div {
+.stat-group > div, .stat {
     flex: 1 0 auto;
     background-color: #C8C8C8;
     padding: 1em;
@@ -104,4 +107,12 @@ img {
     color: #FFFFFF;
     height: 2em;
     width: 2em;
+}
+
+.task {
+    @extend .stat;
+    max-width: 25%;
+}
+.task.complete {
+    background-color: #99ff99;
 }

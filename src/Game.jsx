@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 
 import CompanySummary from "./components/CompanySummary.jsx";
-import Sprint from "./components/Sprint.jsx";
+import Sprint from "./components/Sprint/Sprint.jsx";
 import Team from "./components/Team.jsx";
 
 
@@ -15,18 +15,41 @@ const Game = () => {
 
     const [tasks, setTasks] = useState([
         {
+            id: 1,
+            section: "Active",
+            name: "Task 1",
             progress: 0,
-            max: 5
+            points: 5
+        },
+        {
+            id: 2,
+            name: "Task 2",
+            section: "Backlog",
+            progress: 0,
+            points: 20
         }
     ]);
+
+    const [sprint, setSprint] = useState({
+        name: "Sprint 1",
+        progress: 0,
+        points: 50
+    })
 
     const codePerSec = employees.map((employee) => employee.code*employee.quantity).reduce((a, b) => a+b);
 
     const doTic = () => {
+        let toAdd = codePerSec;
+
         setTasks((prev) => {
             const newTasks = [...prev];
-            newTasks.forEach((task) => {
-                task.progress = Math.min(task.progress + codePerSec, task.max);
+            newTasks.filter(task => task.section == "Active").forEach((task) => {
+                const amtToAdd = Math.min(toAdd, task.points - task.progress);
+                task.progress = task.progress + amtToAdd;
+                toAdd = toAdd - amtToAdd;
+                if(isTaskComplete(task)) {
+                    moveTask(task.id);
+                }
             });
 
             return newTasks;
@@ -49,11 +72,72 @@ const Game = () => {
         );
     }
 
+    const moveTask = (id) => {
+        console.log(tasks, id);
+        const curTask = tasks.filter(task => task.id == id)[0];
+        const curSec = curTask.section;
+        console.log(curTask, curSec);
+
+        let newSec = curSec;
+        switch(curSec) {
+            case "Backlog":
+                newSec = "Active";
+                break;
+            case "Active":
+                if(isTaskComplete(curTask)) {
+                    newSec = "Complete";
+                } else {
+                    newSec = "Backlog";
+                }
+                break;
+            case "Complete":
+                completeTask(curTask);
+                return;
+        }
+
+        console.log("Moving task " + id + " from " + curSec + " to " + newSec);
+
+        moveTaskToSection(id, newSec);        
+    }
+
+    function moveTaskToSection(id, section) {
+        setTasks((prev) => {
+            const newTasks = [...prev];
+            newTasks.filter(task => task.id == id)[0].section = section;
+            return newTasks;
+        });
+    }
+
+    function isTaskComplete(task) {
+        return task.progress >= task.points;
+    }
+
+    function completeTask(task) {
+        updateSprint(task.points);
+        removeTask(task);
+    }
+
+    function updateSprint(points) {
+        setSprint((prev) => {
+            return {
+                ...prev, 
+                progress: prev.progress + points
+            }
+        });
+    }
+
+    function removeTask(task) {
+        setTasks((prev) => {
+            const index = prev.findIndex((x) => x.id == task.id);
+            return [...prev.slice(0, index), ...prev.slice(index+1)];    
+        })
+    }
+
     return (
         <div id="game" className="main-content">
             <CompanySummary />
-            <Sprint tasks={tasks} />
-            <Team employees={employees} addEmployee={addEmployee} />
+            <Sprint tasks={tasks} sprint={sprint} moveTask={moveTask} />
+            <Team employees={employees} addEmployee={addEmployee} codePerSec={codePerSec} />
         </div>
     );
 };

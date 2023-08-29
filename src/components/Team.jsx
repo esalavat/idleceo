@@ -1,9 +1,6 @@
 import React from "react";
 
 const Team = ({employees, addEmployee, codePerSec}) => {
-    
-    console.log(employees);
-        
     return (
         <div className="section">
             <h1>Team</h1>
@@ -12,7 +9,6 @@ const Team = ({employees, addEmployee, codePerSec}) => {
                     Code/sec: {codePerSec}
                 </div>
             </div>
-            <div className="code"></div>
             <div id="employees">
                 <h2>Title(Quantity): Lines of Code Per second</h2>
                 <ul>

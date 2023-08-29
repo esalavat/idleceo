@@ -1,6 +1,7 @@
 const path = require("path");
 const webpack = require("webpack");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   entry: "./src/index.js",
@@ -57,9 +58,9 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(),
-    new webpack.HotModuleReplacementPlugin()
-    //new HtmlWebpackPlugin({
-    //  title: "Chat"
-    //})
+    new webpack.HotModuleReplacementPlugin(),
+    new HtmlWebpackPlugin({
+        template: "src/index.html"
+    })
   ]
 };
