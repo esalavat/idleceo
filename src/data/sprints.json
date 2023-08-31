@@ -1,27 +1,31 @@
-{
-    "id": 1,
-    "name": "Sprint 1: The Beginning",
-    "tasks": [
-        {
-            "id": 1,
-            "section": "Active",
-            "name": "Task 1",
-            "progress": 0,
-            "points": 5
-        },
-        {
-            "id": 2,
-            "name": "Task 2",
-            "section": "Backlog",
-            "progress": 0,
-            "points": 20
-        },
-        {
-            "id": 3,
-            "name": "Task 3",
-            "section": "Backlog",
-            "progress": 0,
-            "points": 25
-        }
-    ]
-}
+[
+    {
+        "id": 1,
+        "name": "Sprint 1: The Beginning",
+        "progress": 0,
+        "points": 50,
+        "tasks": [
+            {
+                "id": 1,
+                "section": "Active",
+                "name": "Task 1",
+                "progress": 0,
+                "points": 5
+            },
+            {
+                "id": 2,
+                "name": "Task 2",
+                "section": "Backlog",
+                "progress": 0,
+                "points": 20
+            },
+            {
+                "id": 3,
+                "name": "Task 3",
+                "section": "Backlog",
+                "progress": 0,
+                "points": 25
+            }
+        ]
+    }
+]
