@@ -14,34 +14,34 @@ const Game = () => {
         quantity: 1
     }]);
 
-    const [tasks, setTasks] = useState([
-        {
-            id: 1,
-            section: "Active",
-            name: "Task 1",
-            progress: 0,
-            points: 5
-        },
-        {
-            id: 2,
-            name: "Task 2",
-            section: "Backlog",
-            progress: 0,
-            points: 20
-        },
-        {
-            id: 3,
-            name: "Task 3",
-            section: "Backlog",
-            progress: 0,
-            points: 25
-        }
-    ]);
-
     const [sprint, setSprint] = useState({
-        name: "Sprint 1",
-        progress: 0,
-        points: 50
+        "id": 1,
+        "name": "Sprint 1: The Beginning",
+        "progress": 0,
+        "points": 50,
+        "tasks": [
+            {
+                "id": 1,
+                "section": "Active",
+                "name": "Task 1",
+                "progress": 0,
+                "points": 5
+            },
+            {
+                "id": 2,
+                "name": "Task 2",
+                "section": "Backlog",
+                "progress": 0,
+                "points": 20
+            },
+            {
+                "id": 3,
+                "name": "Task 3",
+                "section": "Backlog",
+                "progress": 0,
+                "points": 25
+            }
+        ]
     })
 
     const codePerSec = employees.map((employee) => employee.code*employee.quantity).reduce((a, b) => a+b);
@@ -49,8 +49,9 @@ const Game = () => {
     function doTic() {
         let toAdd = codePerSec;
 
-        setTasks((prev) => {
-            const newTasks = [...prev];
+        setSprint((prev) => {
+            const newSprint = {...prev};
+            const newTasks = [...prev.tasks];
             newTasks.filter(task => task.section == "Active").forEach((task) => {
                 const amtToAdd = Math.min(toAdd, task.points - task.progress);
                 task.progress = task.progress + amtToAdd;
@@ -60,7 +61,7 @@ const Game = () => {
                 }
             });
 
-            return newTasks;
+            return newSprint;
         });
     }
 
@@ -79,8 +80,8 @@ const Game = () => {
     }
 
     const moveTask = (id) => {
-        console.log(tasks, id);
-        const curTask = tasks.filter(task => task.id == id)[0];
+        console.log(sprint.tasks, id);
+        const curTask = sprint.tasks.filter(task => task.id == id)[0];
         const curSec = curTask.section;
         console.log(curTask, curSec);
 
@@ -105,10 +106,11 @@ const Game = () => {
     }
 
     function moveTaskToSection(id, section) {
-        setTasks((prev) => {
-            const newTasks = [...prev];
+        setSprint((prev) => {
+            const newSprint = {...prev};
+            const newTasks = [...prev.tasks];
             newTasks.filter(task => task.id == id)[0].section = section;
-            return newTasks;
+            return newSprint;
         });
     }
 
@@ -129,17 +131,10 @@ const Game = () => {
         });
     }
 
-    function removeTask(task) {
-        setTasks((prev) => {
-            const index = prev.findIndex((x) => x.id == task.id);
-            return [...prev.slice(0, index), ...prev.slice(index+1)];    
-        })
-    }
-
     return (
         <div id="game" className="main-content">
             <CompanySummary />
-            <Sprint tasks={tasks} sprint={sprint} moveTask={moveTask} />
+            <Sprint sprint={sprint} moveTask={moveTask} />
             <Team employees={employees} addEmployee={addEmployee} codePerSec={codePerSec} />
         </div>
     );
